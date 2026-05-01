@@ -1,0 +1,28 @@
+name: Node.js CI
+
+# На яких подіях запускати (push або pull request)
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Копіюємо код репозиторію на віртуальну машину
+      - uses: actions/checkout@v4
+
+      # 2. Встановлюємо Node.js
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. Встановлюємо залежності (якщо є package.json)
+      - run: npm install
+
+      # 4. Запускаємо тести
+      - run: npm test
